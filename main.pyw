@@ -1,4 +1,3 @@
-from database import main
 import tkinter as tk
 from tkinter import ttk
 import database as db    
@@ -59,7 +58,7 @@ main_tree.heading("SL pts.", text="SL Pts.")
 main_tree.heading("TP pts.", text="TP Pts.")
 main_tree.heading("SL amt.", text="SL Amt.")
 main_tree.heading("TP amt.", text="TP Amt.")
-main_tree.heading("Risk %", text="RR %")
+main_tree.heading("Risk %", text="Risk %")
 
 main_tree.tag_configure(tagname="green", background="#4feb34")
 main_tree.tag_configure(tagname="orange", background="#eb8f34")

@@ -63,7 +63,7 @@ def get_row(script, sl_pts, balance, rr, risk_percent, price):
     cur = conn.cursor()
     SQL_COMMAND = f'SELECT * FROM Scripts WHERE Script = "{script.upper()}";'
     cur.execute(SQL_COMMAND)
-    script_name, lot_sze, margin = cur.fetchall()[0]
+    script_name, lot_sze, margin = next(cur)
     # Futures Data
     f_margin = round(margin, 1)
     tp_pts = sl_pts * rr
