@@ -60,6 +60,10 @@ main_tree.heading("SL amt.", text="SL Amt.")
 main_tree.heading("TP amt.", text="TP Amt.")
 main_tree.heading("RR %", text="RR %")
 
+main_tree.tag_configure(tagname="green", background="#4feb34")
+main_tree.tag_configure(tagname="orange", background="#eb8f34")
+main_tree.tag_configure(tagname="red", background="#f03329")
+
 #summary_tree = ttk.Treeview(root)
 #summary_tree['columns'] = ('tot. loss', 'tot. profit', 'tot. rr%', 'tot. margin')
 
@@ -87,17 +91,27 @@ balance_entry.place(x=370, y=20)
 
 main_tree.place(x=10, y=50)
 
+def rr_highlight_color(value):
+    if value <= 2.0:
+        return "green"
+    elif value >2.0 and value <=3.0:
+        return "orange"
+    elif value > 3.0:
+        return "red"
+    return None
+
 
 def insert_script():
     balance = balance_entry.get()
     rr = rr_entry.get()
     if read_write() != (balance, rr):
         read_write('w', (balance, rr))
-
+    
     script_name = script_search.get()
     sl_value = int(sl_entry.get())
     data = db.get_row(script_name, sl_value, *read_write())
-    main_tree.insert('', 'end', values=data)
+    tag_val = rr_highlight_color(float(data[-1]))
+    main_tree.insert('', 'end', values=data, tag=tag_val)
 
 
 insert_button = tk.Button(root, text="Insert", command=insert_script)
