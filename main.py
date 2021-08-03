@@ -92,9 +92,9 @@ balance_entry.place(x=370, y=20)
 main_tree.place(x=10, y=50)
 
 def rr_highlight_color(value):
-    if value <= 2.0:
+    if value <= 1.0:
         return "green"
-    elif value >2.0 and value <=3.0:
+    elif value >1.0 and value <=3.0:
         return "orange"
     elif value > 3.0:
         return "red"
