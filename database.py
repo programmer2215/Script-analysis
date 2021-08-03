@@ -11,7 +11,7 @@ def load_data():
     
     data_array = []
 
-    for row in range(1, row_count + 1):
+    for row in range(2, row_count + 1):
         row_array = []
         for column in range(0, column_count):
             column_id = chr(65 + column)
@@ -57,21 +57,31 @@ def get_script_options():
     return data
 
 
-def get_row(script, sl_pts, balance, rr):
+def get_row(script, sl_pts, balance, rr, risk_percent, price):
+    result = {}
     conn = sql.connect("Scripts.sqlite")
     cur = conn.cursor()
     SQL_COMMAND = f'SELECT * FROM Scripts WHERE Script = "{script.upper()}";'
     cur.execute(SQL_COMMAND)
     script_name, lot_sze, margin = cur.fetchall()[0]
+    # Futures Data
+    f_margin = round(margin, 1)
     tp_pts = sl_pts * rr
-    sl_amt = sl_pts * lot_sze
-    tp_amt = tp_pts * lot_sze
-    rr_percent = round((sl_amt / balance) * 100, 2)
+    f_sl_amt = sl_pts * lot_sze
+    f_tp_amt = tp_pts * lot_sze
+    f_risk_percent = round((f_sl_amt / balance) * 100, 2)
+    result["Futures"] = script_name, lot_sze, f_margin, sl_pts, tp_pts, f_sl_amt, f_tp_amt, f_risk_percent
 
-    
+    #Equity Data
+    e_risk_amount = (risk_percent / 100) * balance #sl amt
+    e_lot_sze = round((e_risk_amount / sl_pts))
+    e_margin = round(((price * e_lot_sze) / 7), 2)
+    e_tp_amt = tp_pts * e_lot_sze
+    e_risk_percent = round((e_risk_amount / balance) * 100, 2)
+    result["Equity"] = script_name, e_lot_sze, e_margin, sl_pts, tp_pts, e_risk_amount, e_tp_amt, e_risk_percent
     conn.commit()
     conn.close()
-    return script_name, lot_sze, margin, sl_pts, tp_pts, sl_amt, tp_amt, rr_percent
+    return result
 
 def main():
     data = load_data()
