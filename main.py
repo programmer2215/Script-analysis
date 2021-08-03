@@ -20,7 +20,8 @@ def read_write(type="r", data=None):
 FONT = ("Helvetica", 12)
 root = tk.Tk()
 root.title("Script Analysis")
-root.geometry("900x500")
+root.geometry("840x200")
+root.resizable(False, False)
 
 style = ttk.Style()
 style.configure("Treeview",
@@ -36,7 +37,7 @@ style.map('Treeview', background=[('selected', 'green')]
 
 main_tree = ttk.Treeview(root, height=2,)
 
-main_tree['columns'] = ("Script", "Lot Size", "Margin", "SL pts.", "TP pts.", "SL amt.", "TP amt.", "RR %")
+main_tree['columns'] = ("Script", "Lot Size", "Margin", "SL pts.", "TP pts.", "SL amt.", "TP amt.", "Risk %")
 
 # Formating columns
 main_tree.column("#0", width=90, minwidth = 90)
@@ -47,7 +48,7 @@ main_tree.column("SL pts.", width=70, minwidth = 50)
 main_tree.column("TP pts.", width=70, minwidth = 50)
 main_tree.column("SL amt.", width=70, minwidth = 50)
 main_tree.column("TP amt.", width=70, minwidth = 50)
-main_tree.column("RR %", width=90, minwidth = 50)
+main_tree.column("Risk %", width=90, minwidth = 50)
 
 # formatting Headers
 main_tree.heading("#0", text="Type")
@@ -58,7 +59,7 @@ main_tree.heading("SL pts.", text="SL Pts.")
 main_tree.heading("TP pts.", text="TP Pts.")
 main_tree.heading("SL amt.", text="SL Amt.")
 main_tree.heading("TP amt.", text="TP Amt.")
-main_tree.heading("RR %", text="RR %")
+main_tree.heading("Risk %", text="RR %")
 
 main_tree.tag_configure(tagname="green", background="#4feb34")
 main_tree.tag_configure(tagname="orange", background="#eb8f34")
@@ -141,8 +142,8 @@ def insert_script():
     
 
 
-insert_button = tk.Button(root, text="Insert", command=insert_script, font=FONT)
-insert_button.place(x =740, y=40)
+insert_button = tk.Button(root, text="Enter", command=insert_script, font=FONT)
+insert_button.place(x =740, y=60)
 
 
 root.mainloop()
