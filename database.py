@@ -46,19 +46,21 @@ def reset_data(data):
     conn.commit()
     conn.close()
 
-def get_row(script):
+def get_row(script, sl_pts, balance, rr):
     conn = sql.connect("Scripts.sqlite")
     cur = conn.cursor()
     SQL_COMMAND = f'SELECT * FROM Scripts WHERE Script = "{script.upper()}";'
-    result = []
-    for i in cur.execute(SQL_COMMAND):
-        result.append(i)
+    cur.execute(SQL_COMMAND)
+    script_name, lot_sze, margin = cur.fetchall()[0]
+    tp_pts = sl_pts * rr
+    sl_amt = sl_pts * lot_sze
+    tp_amt = tp_pts * lot_sze
+    rr_percent = round((sl_amt / balance) * 100, 2)
 
+    
     conn.commit()
     conn.close()
-    return result
-
-print(get_row("auBank"))
+    return script_name, lot_sze, margin, sl_pts, tp_pts, sl_amt, tp_amt, rr_percent
 
 def main():
     data = load_data()
