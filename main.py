@@ -1,7 +1,7 @@
 from database import main
 import tkinter as tk
 from tkinter import ttk
-import database as db
+import database as db    
 
 
 def read_write(type="r", data=None):
@@ -27,26 +27,27 @@ style.configure("Treeview",
     background="silver",
     foreground="black",
     rowheight=25,
-    fieldbackground="silver"
+    fieldbackground="silver",
+    font=FONT
 )
+style.configure("Treeview.Heading", font=FONT)
 style.map('Treeview', background=[('selected', 'green')]
 )
 
 main_tree = ttk.Treeview(root)
-#main_tree.tag_configure('oddrow', background='orange')
-#main_tree.tag_configure('evenrow', background='purple')
+
 main_tree['columns'] = ("Script", "Lot Size", "Margin", "SL pts.", "TP pts.", "SL amt.", "TP amt.", "RR %")
 
 # Formating columns
 main_tree.column("#0", width=0, minwidth = 0)
-main_tree.column("Script", width=70, minwidth = 50)
-main_tree.column("Lot Size", width=60, minwidth = 50)
-main_tree.column("Margin", width=60, minwidth = 50)
-main_tree.column("SL pts.", width=60, minwidth = 50)
-main_tree.column("TP pts.", width=60, minwidth = 50)
-main_tree.column("SL amt.", width=60, minwidth = 50)
-main_tree.column("TP amt.", width=60, minwidth = 50)
-main_tree.column("RR %", width=60, minwidth = 50)
+main_tree.column("Script", width=90, minwidth = 50)
+main_tree.column("Lot Size", width=70, minwidth = 50)
+main_tree.column("Margin", width=80, minwidth = 50)
+main_tree.column("SL pts.", width=70, minwidth = 50)
+main_tree.column("TP pts.", width=70, minwidth = 50)
+main_tree.column("SL amt.", width=70, minwidth = 50)
+main_tree.column("TP amt.", width=70, minwidth = 50)
+main_tree.column("RR %", width=90, minwidth = 50)
 
 # formatting Headers
 main_tree.heading("#0", text="")
@@ -69,7 +70,11 @@ sl_var = tk.StringVar(root, value="SL in pts.")
 rr_var = tk.StringVar(root, value=read_write()[1])
 balance_var = tk.StringVar(root, value=read_write()[0])
 
-script_search = tk.Entry(root, textvariable=script_var, width=10, font=FONT)
+options = tuple(db.get_script_options())
+script_search = ttk.Combobox(root, textvariable=script_var, width=10, font=FONT)
+script_search['values'] = options
+script_search['state'] = 'readonly'
+script_search.pack()
 sl_entry = tk.Entry(root, textvariable=sl_var, width=10, font=FONT)
 rr_entry = tk.Entry(root, textvariable=rr_var, width=10, font=FONT)
 balance_entry = tk.Entry(root, textvariable=balance_var, width=10, font=FONT)

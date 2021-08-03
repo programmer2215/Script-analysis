@@ -46,6 +46,17 @@ def reset_data(data):
     conn.commit()
     conn.close()
 
+def get_script_options():
+    conn = sql.connect("Scripts.sqlite")
+    cur = conn.cursor()
+    data = []
+    SQL_COMMAND = "SELECT Script FROM Scripts;"
+    for script in cur.execute(SQL_COMMAND):
+        data.append(script)
+
+    return data
+
+
 def get_row(script, sl_pts, balance, rr):
     conn = sql.connect("Scripts.sqlite")
     cur = conn.cursor()
