@@ -17,10 +17,10 @@ def read_write(type="r", data=None):
                 f.write(data[1])
     
 
-FONT = ("Helvetica", 12)
+FONT = ("Helvetica", 14)
 root = tk.Tk()
 root.title("Script Analysis")
-root.geometry("840x200")
+root.geometry("855x200")
 root.resizable(False, False)
 
 style = ttk.Style()
@@ -32,6 +32,8 @@ style.configure("Treeview",
     font=FONT
 )
 style.configure("Treeview.Heading", font=FONT)
+style.configure('my.TButton', font=('Helvetica', 12))
+style.configure("Entry", font=FONT)
 style.map('Treeview', background=[('selected', 'green')]
 )
 
@@ -42,12 +44,12 @@ main_tree['columns'] = ("Script", "Lot Size", "Margin", "SL pts.", "TP pts.", "S
 # Formating columns
 main_tree.column("#0", width=90, minwidth = 90)
 main_tree.column("Script", width=90, minwidth = 50)
-main_tree.column("Lot Size", width=70, minwidth = 50)
+main_tree.column("Lot Size", width=80, minwidth = 50)
 main_tree.column("Margin", width=80, minwidth = 50)
 main_tree.column("SL pts.", width=70, minwidth = 50)
 main_tree.column("TP pts.", width=70, minwidth = 50)
-main_tree.column("SL amt.", width=70, minwidth = 50)
-main_tree.column("TP amt.", width=70, minwidth = 50)
+main_tree.column("SL amt.", width=90, minwidth = 50)
+main_tree.column("TP amt.", width=90, minwidth = 50)
 main_tree.column("Risk %", width=90, minwidth = 50)
 
 # formatting Headers
@@ -82,11 +84,11 @@ options = [x[0] for x in db.get_script_options()]
 
 script_search = AutocompleteEntry(root, textvariable=script_var, width=10, completevalues=options,font=FONT)
 
-sl_entry = tk.Entry(root, textvariable=sl_var, width=10, font=FONT)
-rr_entry = tk.Entry(root, textvariable=rr_var, width=10, font=FONT)
-risk_entry = tk.Entry(root, textvariable=risk_var, width=10, font=FONT)
-price_entry = tk.Entry(root, textvariable=price_var, width=10, font=FONT)
-balance_entry = tk.Entry(root, textvariable=balance_var, width=10, font=FONT)
+sl_entry = ttk.Entry(root, textvariable=sl_var, width=10, font=FONT)
+rr_entry = ttk.Entry(root, textvariable=rr_var, width=10, font=FONT)
+risk_entry = ttk.Entry(root, textvariable=risk_var, width=10, font=FONT)
+price_entry = ttk.Entry(root, textvariable=price_var, width=10, font=FONT)
+balance_entry = ttk.Entry(root, textvariable=balance_var, width=10, font=FONT)
 
 # labels
 script_txt = tk.Label(root, text="Script", font=FONT)
@@ -97,20 +99,20 @@ price_txt = tk.Label(root, text="Price", font=FONT)
 balance_txt = tk.Label(root, text="Balance", font=FONT)
 
 script_txt.place(x=10, y=10)
-sl_txt.place(x=130, y=10)
-rr_txt.place(x = 250, y = 10)
-balance_txt.place(x=370, y=10)
-risk_txt.place(x=490, y=10)
-price_txt.place(x=610, y=10)
+sl_txt.place(x=135, y=10)
+rr_txt.place(x = 255, y = 10)
+balance_txt.place(x=375, y=10)
+risk_txt.place(x=495, y=10)
+price_txt.place(x=615, y=10)
 
 script_search.place(x=10, y=40)
-sl_entry.place(x=130, y=40)
-rr_entry.place(x = 250, y = 40)
-balance_entry.place(x=370, y=40)
-risk_entry.place(x=490, y=40)
-price_entry.place(x=610, y=40)
+sl_entry.place(x=135, y=40)
+rr_entry.place(x = 255, y = 40)
+balance_entry.place(x=375, y=40)
+risk_entry.place(x=495, y=40)
+price_entry.place(x=615, y=40)
 
-main_tree.place(x=10, y=70)
+main_tree.place(x=10, y=90)
 
 def rr_highlight_color(value):
     if value <= 1.0:
@@ -141,8 +143,8 @@ def insert_script():
     
 
 
-insert_button = tk.Button(root, text="Enter", command=insert_script, font=FONT)
-insert_button.place(x =740, y=60)
+insert_button = ttk.Button(root, text="Enter", command=insert_script, style="my.TButton")
+insert_button.place(x =740, y=40)
 
 
 root.mainloop()
