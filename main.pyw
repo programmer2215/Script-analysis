@@ -1,3 +1,4 @@
+from ttkwidgets.autocomplete import AutocompleteEntry
 import tkinter as tk
 from tkinter import ttk
 import database as db    
@@ -70,18 +71,17 @@ main_tree.tag_configure(tagname="red", background="#f03329")
 
 
 
-script_var = tk.StringVar(root, value="script")
+script_var = tk.StringVar(root)
 sl_var = tk.StringVar(root)
 rr_var = tk.StringVar(root, value=read_write()[1])
 risk_var = tk.StringVar(root)
 price_var = tk.StringVar(root)
 balance_var = tk.StringVar(root, value=read_write()[0])
 
-options = tuple(db.get_script_options())
-script_search = ttk.Combobox(root, textvariable=script_var, width=10, font=FONT)
-script_search['values'] = options
-script_search['state'] = 'readonly'
-script_search.pack()
+options = [x[0] for x in db.get_script_options()]
+
+script_search = AutocompleteEntry(root, textvariable=script_var, width=10, completevalues=options,font=FONT)
+
 sl_entry = tk.Entry(root, textvariable=sl_var, width=10, font=FONT)
 rr_entry = tk.Entry(root, textvariable=rr_var, width=10, font=FONT)
 risk_entry = tk.Entry(root, textvariable=risk_var, width=10, font=FONT)

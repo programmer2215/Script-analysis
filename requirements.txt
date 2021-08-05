@@ -1,0 +1,2 @@
+openpyxl==3.0.7
+ttkwidgets==0.12.1
